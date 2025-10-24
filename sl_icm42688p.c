@@ -104,8 +104,8 @@ sl_status_t sl_icm42688p_init(void)
     return SL_STATUS_INITIALIZATION;
   }
 
-  /* Disable I3C and ensure SPI-only */
-  sl_icm42688p_write_register(ICM42688P_REG_INTF_CONFIG0, (uint8_t)ICM42688P_INTF_CONFIG0_I3C_DISABLE);
+  /* Disable I2C and ensure SPI-only */
+  sl_icm42688p_write_register(ICM42688P_REG_INTF_CONFIG0, (uint8_t)ICM42688P_INTF_CONFIG0_I2C_DISABLE);
 
   /* Power up: enable accel & gyro low-noise mode and enable temperature */
   uint8_t pwr = (uint8_t)(ICM42688P_PWR_MGMT0_ACCEL_MODE_LOWNOISE | ICM42688P_PWR_MGMT0_GYRO_MODE_LOWNOISE);
@@ -312,10 +312,8 @@ sl_status_t sl_icm42688p_enable_interrupt(bool data_ready_enable)
         int_enable |= ICM42688P_INT_STATUS0_DATA_RDY;  // Set mask for Data Ready interrupt
     }
 
-    /* Masked write to INT_ENABLE register to avoid affecting other interrupts */
-    sl_icm42688p_masked_write(ICM42688P_REG_INT_ENABLE,
-                              int_enable,
-                              ICM42688P_INT_STATUS0_DATA_RDY);
+    /* Masked write to INT_SOURCE0 register to enable DATA_RDY interrupt */
+    sl_icm42688p_masked_write(ICM42688P_REG_INT_SOURCE0, int_enable, ICM42688P_INT_SOURCE0_UI_DRDY_INT1_EN);
 
     return SL_STATUS_OK;
 }

@@ -165,7 +165,7 @@ extern "C" {
 /* Temperature sensor disable (bit 5) */
 #define ICM42688P_PWR_MGMT0_TEMP_DIS             (1U << 5)
 
-#define ICM42688P_INTF_CONFIG0_I3C_DISABLE   (1U << 1)  // bit 1 disables I3C
+#define ICM42688P_INTF_CONFIG0_I2C_DISABLE   (0x03U)  // bit 1 disables I3C
 #define ICM42688P_DEVICE_CONFIG_RESET   0x01
 #define ICM42688P_INT_STATUS0_DATA_RDY   (1U << 0)
 #define ICM42688P_ACCEL_ODR_MASK 0x0FU
@@ -178,7 +178,8 @@ extern "C" {
 #define ICM42688P_INT1_POLARITY            (1U << 0)  // Bit 0: INT1 polarity (0=active-low, 1=active-high)
 #define ICM42688P_INT1_DRIVE_CIRCUIT       (1U << 1)  // Bit 1: INT1 drive circuit (0=open-drain, 1=push-pull)
 #define ICM42688P_INT1_MODE                 (1U << 2)  // Bit 2: INT1 mode (0=pulsed, 1=latched)
-
+#define ICM42688P_REG_INT_SOURCE0                 0x65U
+#define ICM42688P_INT_SOURCE0_UI_DRDY_INT1_EN     (1 << 3)
 
 #ifdef __cplusplus
 }
